@@ -1,0 +1,91 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Document
+    link(rel="stylesheet", href="/style.css")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin="")
+    link(href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Festive&family=Geist+Mono:wght@100..900&family=Henny+Penny&family=League+Spartan:wght@100..900&family=Orbitron:wght@400..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet")
+  body
+    nav
+      img(src="/image/Logo.png", alt="")
+    header#hero
+      h1.hide
+        | Sustainable Energy for 
+        br
+        | a Brighter Future 
+        br
+        | with Rooftop Energy
+
+
+    div.section1
+      h1 Solar Savings Calculator
+      form.form(action='/calculate' method='post' id='calculate-form')
+        label Enter Monthly TNB Bill (RM):
+        input(type="number" name="tnb_bill" required placeholder="Enter TNB Bill")
+        label Location:
+        select
+          option(value="selangor") Selangor
+          option(value="johor") Johor
+          option(value="johor") Sabah
+          option(value="johor") Kedah
+          option(value="johor") Sarawak
+          option(value="johor") Pahang
+          option(value="johor") Malacca
+        button(type="submit") Calculate
+
+    div.section2
+      h1 Your Solar Savings
+      .results(id='results')
+        p System Size: RM
+          span= systemSize
+        p Total System Cost: RM 
+          span= totalSystemCost 
+        p Estimated Monthly Installment: RM 
+          span= estimatedInstallments
+        button(type="submit" id='print-btn') Print
+
+    div.section3
+      h1 Request Callback
+      form.form(action="/callback" method='post' onsubmit="displayMessage()")
+        label Enter Full Name:
+        input(type="text" name="fullName" required placeholder="Enter Full Name")
+        label Enter Email Address:
+        input(type="email" name = "emailAddress" required placeholder="Enter Email Address")
+        button(type="submit" ) Send
+
+    footer
+      .flex
+        img(src="image/Logo.png", alt="")
+        p Sales: 
+          a(href="mailto:sales@rooftop.my") sales@rooftop.my
+        p Partnerships: 
+          a(href="mailto:partnerships@rooftop.my ") partnerships@rooftop.my
+        p Investors: 
+          a(href="mailto:investors@rooftop.my") investors@rooftop.my
+      p.copyright Rooftop Energy © 2024
+
+    script.
+        document.getElementById('print-btn').addEventListener('click', () => {
+            //remove button
+            let printButton = document.querySelector('#print-btn');
+            printButton.style.display = "none";
+
+            let printContent = document.querySelector('.section2').innerHTML;
+            let originalContent = document.body.innerHTML;
+
+            document.body.innerHTML = printContent;
+            window.print();
+
+            document.body.innerHTML = originalContent;
+
+            printButton.style.display = 'block';
+
+            //location.reload();
+        });
+
+        function displayMessage(){
+          window.alert("Your contact details have been sent to our team. Our customer support will contact you shortly.");
+        }
